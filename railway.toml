@@ -3,7 +3,8 @@ version = 2
 
 [build]
 builder = "DOCKERFILE"
-dockerfilePath = "backend/Dockerfile"
+dockerfilePath = "Dockerfile"
+rootDirectory = "backend"
 
 [deploy]
 healthcheckPath = "/health"
