@@ -1,0 +1,9 @@
+{
+  "accuracy": 0.8,
+  "f1_score": 0.8421052631578947,
+  "training_samples": 60,
+  "test_samples": 15,
+  "features": 53,
+  "model_type": "LogisticRegression",
+  "vectorizer_type": "TF-IDF"
+}
