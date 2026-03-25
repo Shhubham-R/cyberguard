@@ -40,9 +40,6 @@ jobs:
           VITE_API_URL: ${{ vars.CYBERGUARD_API_URL }}
         run: npm run build
 
-      - name: Setup Pages
-        uses: actions/setup-pages@v4
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
