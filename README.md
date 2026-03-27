@@ -45,59 +45,22 @@ Does everything automatically:
 
 ---
 
-### Option 2: Semi-Automatic (Linux/Mac)
+## 🖥️ Full Stack (Local Development)
 
 ```bash
-./start-server.sh
+# Backend
+cd backend
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+python -m uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Frontend (new terminal)
+cd frontend
+npm install
+npm run dev
 ```
 
-Starts the backend + Cloudflare tunnel, but does **not** push to GitHub. You manually update the `VITE_API_URL` in `.github/workflows/pages.yml` with the tunnel URL shown in the output.
-
----
-
-### Option 3: Windows — Backend Only
-
-```batch
-# In Command Prompt or Double-click
-start-server.bat
-```
-
-Starts the backend only at `http://localhost:8000`. Shows your local IP (e.g. `192.168.x.x:8000`) — others on your network can use it directly (no tunnel needed for local network access).
-
----
-
-### Option 4: Windows — Full Stack
-
-```batch
-start.bat
-```
-
-Installs all dependencies and starts both servers in separate windows. Opens the frontend in your browser automatically.
-
----
-
-### Option 5: Linux/Mac — Full Stack
-
-```bash
-./start.sh
-```
-
-Installs all dependencies and starts both servers (frontend + backend, no tunnel).
-
----
-
-## 🌐 Deploying to Railway (Alternative to Tunnel)
-
-For permanent hosting without relying on your local machine:
-
-1. Create a [Railway](https://railway.app) account
-2. Connect your GitHub repo
-3. Set root directory to `backend`
-4. Railway auto-detects the `Dockerfile`
-5. Set environment variable: `PYTHON_VERSION = 3.10`
-6. Deploy — your API will be at `https://<your-app>.railway.app`
-
-Update `VITE_API_URL` in `.github/workflows/pages.yml` to your Railway URL.
+Access at `http://localhost:3000` — frontend proxies `/api` to backend.
 
 ---
 
@@ -181,6 +144,6 @@ python train.py
 
 ---
 
-**Built with ❤️ by [shubi](https://github.com/Shhubham-R)**
+**Built by [Shhubham-R](https://github.com/Shhubham-R)**
 
 **Tech Stack:** FastAPI · React · Vite · Tailwind CSS · scikit-learn · Cloudflare Tunnel
