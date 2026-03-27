@@ -12,29 +12,6 @@
 
 The backend requires Python/FastAPI hosting. The easiest way:
 
-### Option 1: Railway (Recommended - 1 Click)
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new?template=https%3A%2F%2Fgithub.com%2FShhubham-R%2Fcyberguard)
-
-1. Click the button above
-2. Connect your GitHub repo (`Shhubham-R/cyberguard`)
-3. Railway auto-detects the `backend/Dockerfile`
-4. Add environment variable: `API_KEY=demo-key-123`
-5. Click **Deploy** — done!
-6. Copy your backend URL (e.g. `https://cyberguard.up.railway.app`)
-7. Set it in GitHub repo: **Settings → Variables → New repository variable** → name: `CYBERGUARD_API_URL`, value: your backend URL
-
-### Option 2: Render (Free Tier)
-
-1. Go to [render.com](https://render.com) → **New → Web Service**
-2. Connect your GitHub repo
-3. Set:
-   - **Root Directory:** `backend`
-   - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
-4. Add `API_KEY=demo-key-123` in Environment variables
-5. Deploy and copy the URL
-
 ---
 
 ## 🖥️ Full Stack (Local Development)
