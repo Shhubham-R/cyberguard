@@ -38,7 +38,7 @@ jobs:
       - name: Build
         working-directory: ./frontend
         env:
-          VITE_API_URL: http://192.168.68.107:8000/api
+          VITE_API_URL: https://gotta-quebec-stuart-witness.trycloudflare.com/api
         run: npm run build
 
       - name: Upload artifact
