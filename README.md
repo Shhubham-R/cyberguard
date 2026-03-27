@@ -8,71 +8,96 @@
 
 ---
 
-## 🚀 Currently Deployed (Local Backend + Tunnel)
+## 🚀 Quick Start (Any OS)
 
-The backend runs on a local machine with a Cloudflare tunnel providing public access. No cloud hosting required!
+The easiest way to get everything running at once:
 
 ```bash
-# Navigate to project
-cd cyberguard-release
+# Works on Windows, Linux, Mac — requires Python 3
+python run.py
+```
 
-# Start everything (backend + tunnel) — fully automatic
+This automatically installs dependencies and starts both servers:
+- 🌐 **Frontend:** http://localhost:3000
+- 🔧 **Backend:** http://localhost:8000
+- 📚 **API Docs:** http://localhost:8000/docs
+
+---
+
+## 🖥️ Local Deployment (GitHub Pages + Local Backend)
+
+When running the backend on your local machine, use a Cloudflare tunnel to give it a public HTTPS URL that GitHub Pages can connect to.
+
+### Option 1: Fully Automated (Linux/Mac) — Recommended ✅
+
+```bash
 ./auto-start.sh
 ```
 
-The script will:
-1. Start the FastAPI backend on `http://localhost:8000`
-2. Create a Cloudflare tunnel with a public URL
-3. Auto-push the tunnel URL to GitHub Actions to rebuild the frontend
-4. Keep everything running
+Does everything automatically:
+1. Starts the FastAPI backend
+2. Creates a Cloudflare tunnel with a public URL
+3. Pushes the tunnel URL to GitHub Actions workflow
+4. Triggers a frontend rebuild automatically
+5. Keeps everything running
 
-**API Key:** `demo-key-123` (default)
-
----
-
-## 🖥️ Manual Local Development
-
-### Backend
-
-```bash
-cd backend
-python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-python -m uvicorn main:app --host 0.0.0.0 --port 8000
-```
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Access the frontend at `http://localhost:3000` — it proxies `/api` requests to the backend.
+> ⚠️ **Note:** The tunnel URL changes every time you restart. The script auto-updates GitHub Actions so your site keeps working.
 
 ---
 
-## 📁 Project Structure
+### Option 2: Semi-Automatic (Linux/Mac)
 
+```bash
+./start-server.sh
 ```
-cyberguard-release/
-├── backend/              # FastAPI + ML model
-│   ├── main.py           # App entry point
-│   ├── model/            # TF-IDF + Logistic Regression
-│   │   ├── predict.py    # Inference logic
-│   │   ├── preprocess.py # Text cleaning
-│   │   └── saved_model/  # Trained model files
-│   └── routers/         # API endpoints
-│       ├── analyze.py    # Text analysis
-│       ├── history.py    # Analysis history
-│       └── stats.py      # Statistics
-├── frontend/             # React + Vite + Tailwind
-│   └── src/
-│       ├── pages/        # Home, Dashboard, Bulk, API, Comment Feed
-│       └── services/     # API client
-└── .github/workflows/    # GitHub Pages deployment
+
+Starts the backend + Cloudflare tunnel, but does **not** push to GitHub. You manually update the `VITE_API_URL` in `.github/workflows/pages.yml` with the tunnel URL shown in the output.
+
+---
+
+### Option 3: Windows — Backend Only
+
+```batch
+# In Command Prompt or Double-click
+start-server.bat
 ```
+
+Starts the backend only at `http://localhost:8000`. Shows your local IP (e.g. `192.168.x.x:8000`) — others on your network can use it directly (no tunnel needed for local network access).
+
+---
+
+### Option 4: Windows — Full Stack
+
+```batch
+start.bat
+```
+
+Installs all dependencies and starts both servers in separate windows. Opens the frontend in your browser automatically.
+
+---
+
+### Option 5: Linux/Mac — Full Stack
+
+```bash
+./start.sh
+```
+
+Installs all dependencies and starts both servers (frontend + backend, no tunnel).
+
+---
+
+## 🌐 Deploying to Railway (Alternative to Tunnel)
+
+For permanent hosting without relying on your local machine:
+
+1. Create a [Railway](https://railway.app) account
+2. Connect your GitHub repo
+3. Set root directory to `backend`
+4. Railway auto-detects the `Dockerfile`
+5. Set environment variable: `PYTHON_VERSION = 3.10`
+6. Deploy — your API will be at `https://<your-app>.railway.app`
+
+Update `VITE_API_URL` in `.github/workflows/pages.yml` to your Railway URL.
 
 ---
 
@@ -87,14 +112,43 @@ cyberguard-release/
 | DELETE | `/api/history` | Clear history |
 | GET | `/health` | Health check |
 
-**Base URL:** `https://retain-charlie-removable-nokia.trycloudflare.com` (or your Railway URL)
+**API Key:** `demo-key-123` (default)
 
 **Example:**
 
 ```bash
-curl -X POST "https://<tunnel-url>/api/analyze" \
+curl -X POST "https://<your-api-url>/api/analyze" \
   -H "Content-Type: application/json" \
   -d '{"text": "You are amazing!", "api_key": "demo-key-123"}'
+```
+
+---
+
+## 📁 Project Structure
+
+```
+cyberguard-release/
+├── run.py              # One-click start (any OS with Python)
+├── auto-start.sh       # Full automation + tunnel + GitHub push (Linux/Mac)
+├── start-server.sh     # Backend + tunnel, no GitHub push (Linux/Mac)
+├── start-server.bat    # Backend only (Windows)
+├── start.sh            # Full stack, no tunnel (Linux/Mac)
+├── start.bat           # Full stack, no tunnel (Windows)
+│
+├── backend/            # FastAPI + ML model
+│   ├── main.py         # App entry point
+│   ├── model/          # TF-IDF + Logistic Regression
+│   │   ├── predict.py
+│   │   ├── preprocess.py
+│   │   └── saved_model/
+│   └── routers/        # analyze, history, stats
+│
+├── frontend/            # React + Vite + Tailwind
+│   └── src/
+│       ├── pages/       # Home, Dashboard, Bulk, API, Comment Feed
+│       └── services/
+│
+└── .github/workflows/   # GitHub Pages deployment
 ```
 
 ---
