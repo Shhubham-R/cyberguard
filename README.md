@@ -53,21 +53,6 @@ Access the frontend at `http://localhost:3000` — it proxies `/api` requests to
 
 ---
 
-## 🌐 Deploying to Railway (Optional)
-
-For permanent cloud hosting without local tunnel:
-
-1. Create a [Railway](https://railway.app) account
-2. Connect your GitHub repo
-3. Set the root directory to `backend`
-4. Railway auto-detects the Dockerfile
-5. Set environment variable: `PYTHON_VERSION = 3.10`
-6. Deploy — your API will be at `https://<your-app>.railway.app`
-
-Update `VITE_API_URL` in `.github/workflows/pages.yml` to match your Railway URL.
-
----
-
 ## 📁 Project Structure
 
 ```
